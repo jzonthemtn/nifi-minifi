@@ -106,6 +106,14 @@ To build:
 docker run -d -v YOUR_CONFIG.YML:/opt/minifi/minifi-${minifi.version}/conf/config.yml apacheminifi:${minifi.version}
 ```
 
+## Windows Installation Build
+
+To create a Windows installer you must have InnoSetup installed. By default Maven expects InnoSetup to exist at `C:\Program Files (x86)\Inno Setup 5\ISCC.exe`. If you installed InnoSetup to a different folder you must set the location in `minifi-assembly/pom.xml`.
+
+To build:
+
+- Execute `mvn -Pwindows-setup clean install`. This will run the full build and execute InnoSetup to create a Windows installer. The build installer will be stored at  `minifi-assembly/target/setup.exe`.
+
 ## Getting Help
 If you have questions, you can reach out to our mailing list: dev@nifi.apache.org
 ([archive](https://mail-archives.apache.org/mod_mbox/nifi-dev)).

@@ -56,6 +56,35 @@ limitations under the License.
             </plugin>
         </plugins>
     </build>
+    <profiles>
+      <profile>
+        <id>windows-setup</id>
+        <properties>
+          <inno.setup.compiler>C:\Program Files (x86)\Inno Setup 5\ISCC.exe</inno.setup.compiler>
+        </properties>
+        <build>
+          <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>"${inno.setup.compiler}"</executable>
+                    <commandlineArgs>/DMyAppVersion=${project.version} src/main/setup/setup.iss</commandlineArgs>
+                </configuration>
+            </plugin>
+          </plugins>
+        </build>
+    </profile>
+    </profiles>
     <dependencies>
         <!-- Logging -->
         <dependency>
