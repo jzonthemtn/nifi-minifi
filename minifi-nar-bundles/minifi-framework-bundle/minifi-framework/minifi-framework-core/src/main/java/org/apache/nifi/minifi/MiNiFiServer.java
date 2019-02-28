@@ -35,6 +35,7 @@ import org.apache.nifi.events.VolatileBulletinRepository;
 import org.apache.nifi.minifi.commons.status.FlowStatusReport;
 import org.apache.nifi.minifi.status.StatusConfigReporter;
 import org.apache.nifi.minifi.status.StatusRequestException;
+import org.apache.nifi.nar.ExtensionManager;
 import org.apache.nifi.registry.VariableRegistry;
 import org.apache.nifi.registry.flow.StandardFlowRegistryClient;
 import org.apache.nifi.reporting.BulletinRepository;
@@ -107,7 +108,8 @@ public class MiNiFiServer {
                     encryptor,
                     bulletinRepository,
                     variableRegistry,
-                    new StandardFlowRegistryClient()
+                    new StandardFlowRegistryClient(),
+                    new ExtensionManager()
                     );
 
             flowService = StandardFlowService.createStandaloneInstance(
@@ -121,7 +123,7 @@ public class MiNiFiServer {
             flowService.start();
             flowService.load(null);
             flowController.onFlowInitialized(true);
-            flowController.getGroup(flowController.getRootGroupId()).startProcessing();
+            flowController.getFlowManager().getGroup(flowController.getFlowManager().getRootGroupId()).startProcessing();
 
             this.flowController = flowController;
 
